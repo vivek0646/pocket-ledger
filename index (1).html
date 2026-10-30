@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>Pocket Ledger</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="wrap">
+  <header class="bar">
+    <div class="bar-in">
+      <h1 class="brand">Pocket Ledger</h1>
+      <div class="month" role="group" aria-label="Month">
+        <button class="btn icon" id="prev" aria-label="Previous month">&#8592;</button>
+        <div class="label" id="monthLabel" aria-live="polite"></div>
+        <button class="btn icon" id="next" aria-label="Next month">&#8594;</button>
+        <button class="btn small ghost" id="today">This month</button>
+      </div>
+      <div class="tools">
+        <select class="btn" id="currency" aria-label="Currency">
+          <option value="INR">₹ INR</option><option value="USD">$ USD</option><option value="EUR">€ EUR</option><option value="GBP">£ GBP</option>
+        </select>
+        <button class="btn" id="backupBtn">Backup</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="grid">
+    <div class="col main">
+      <section class="sum" aria-label="Month summary">
+        <div class="stat"><div class="k">Income</div><div class="v pos" id="sInc"></div></div>
+        <div class="stat"><div class="k">Spent</div><div class="v neg" id="sExp"></div></div>
+        <div class="stat net"><div class="k">Net saved</div><div class="v" id="sNet"></div></div>
+        <div class="stat"><div class="k">Savings rate</div><div class="v" id="sRate"></div></div>
+      </section>
+
+      <section class="panel">
+        <h2>Last six months <span class="legend"><span><i class="sw" style="background:var(--income)"></i>Income</span><span><i class="sw" style="background:var(--expense)"></i>Spent</span></span></h2>
+        <svg class="chart" id="trend" viewBox="0 0 640 230" role="img" aria-label="Income and spending for the last six months"></svg>
+      </section>
+
+      <div id="exBanner"></div>
+
+      <section class="panel">
+        <h2>Transactions <small id="txCount"></small></h2>
+        <div class="filters">
+          <input type="search" id="q" placeholder="Search notes or categories" aria-label="Search">
+          <select id="fType" aria-label="Type filter"><option value="all">All</option><option value="expense">Spending</option><option value="income">Income</option></select>
+          <select id="fCat" aria-label="Category filter"></select>
+        </div>
+        <div class="list" id="list"></div>
+      </section>
+    </div>
+
+    <div class="col side">
+      <section class="panel form">
+        <h2 id="formTitle">Add transaction</h2>
+        <form id="form" novalidate>
+          <div class="seg" role="group" aria-label="Type">
+            <button type="button" id="tExp" aria-pressed="true">Spending</button>
+            <button type="button" id="tInc" aria-pressed="false">Income</button>
+          </div>
+          <div class="row2">
+            <div class="field"><label for="amount">Amount</label><input id="amount" type="number" inputmode="decimal" min="0" step="0.01" placeholder="0"></div>
+            <div class="field"><label for="date">Date</label><input id="date" type="date"></div>
+          </div>
+          <div class="field"><label for="cat">Category</label><select id="cat"></select></div>
+          <div class="field"><label for="note">Note</label><input id="note" type="text" maxlength="80" placeholder="Optional"></div>
+          <p class="err" id="err" role="alert"></p>
+          <div class="actions">
+            <button type="submit" class="btn primary" id="save">Add</button>
+            <button type="button" class="btn" id="cancel" hidden>Cancel</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel">
+        <h2>Budgets <small>monthly limits</small></h2>
+        <div class="bud" id="budgets"></div>
+      </section>
+
+      <section class="panel">
+        <h2>Where it went <small id="bkTotal"></small></h2>
+        <div class="stack" id="stack"></div>
+        <div class="bk" id="bk"></div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<div id="toastHost"></div>
+<div id="modalHost"></div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
