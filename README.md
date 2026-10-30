@@ -2,7 +2,6 @@
 
 A simple personal finance tracker that runs entirely in your browser. No account, no server, no build step.
 
-**Live demo:** https://YOUR-USERNAME.github.io/pocket-ledger/
 
 ## Features
 
